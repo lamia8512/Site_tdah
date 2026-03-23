@@ -1,0 +1,15 @@
+{
+  "name": "lamia/sitetdah",
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/",
+      "Config\\": "config/"
+    }
+  },
+  "authors": [
+    {
+      "name": "lamia"
+    }
+  ],
+  "require": {}
+}
