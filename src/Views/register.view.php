@@ -7,7 +7,7 @@ require_once(__DIR__ . "/partials/head.view.php");
         <div class="form-group">
             <label for="pseudo" class="form-label">Pseudo :</label>
             <input type="text" name="pseudo" id="pseudo" placeholder="Lulu" class="form-control">
-             <?php 
+            <?php 
             if(isset($this->errors['pseudo'])){
                 ?>
                     <p class="text-danger"><?= $this->errors['pseudo']?></p>
