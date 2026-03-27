@@ -1,5 +1,5 @@
 <footer>
-    <p> © <?= date('Y') ?> - Site TDAH</p>
+    <p> © <?= date('Y') ?> - Blog TDAH</p>
 </footer>
 </body>
 </html>
