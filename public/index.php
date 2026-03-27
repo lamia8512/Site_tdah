@@ -7,6 +7,8 @@ $router = new Router;
 
 $router->addRoute('/', 'HomeController', 'index');
 $router->addRoute('/404', 'ErrorController', 'notFound');
+$router->addRoute('/inscription', 'RegisterController', 'register');
+$router->addRoute('/connexion', 'SessionController', 'login');
 
 
 $router->handleRequest();
