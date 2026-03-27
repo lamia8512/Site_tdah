@@ -14,11 +14,17 @@
 <nav class="navbar bg-primary" data-bs-theme="dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">TDAH</a>
-    <a class="navbar-brand" href="/register">Inscription</a>
-    <a class="navbar-brand" href="/login">Connexion</a>
-    <a class="navbar-brand" href="/logout">Déconnexion</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <?php 
+    if(isset( $_SESSION["user"])){
+      ?>
+      <a class="navbar-brand" href="/deconnexion">Déconnexion</a>
+    <?php
+    }else{
+      ?>
+      <a class="navbar-brand" href="/inscription">Inscription</a>
+      <a class="navbar-brand" href="/connexion">Connexion</a>
+    <?php
+    }
+    ?>
   </div>
 </nav>
