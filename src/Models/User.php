@@ -16,6 +16,7 @@ class User
     private ?string $creation_date;
     private ?int $id_role;
 
+    // Méthode magique qui va être appelée (exécutée) automatiquement à chaque fois qu’on va instancier une classe (création d'un objet à partir d'un modèle)
     public function __construct(?int $id_user, ?string $pseudo, ?string $email, ?string $password, ?string $creation_date, ?int $id_role)
     {
         $this->id_user = $id_user;
@@ -25,31 +26,44 @@ class User
         $this->creation_date = $creation_date;
         $this->id_role = $id_role;
     }
-
+    
+    //Méthode pour récupérer des données de l'utilisateur pour la création du formulaire d'inscription
     public function register()
     {
+        //connexion à la base de données
         $pdo = Database::getConnection();
+        //Requête qui permet d'intégrer de nouveaux enregistrements au sein de la base de données
         $sql = "INSERT INTO `user` (`pseudo`, `email`, `password`, `creation_date`, `id_role`) VALUES (?,?,?,?,?)";
+        //On appelle la connection à la base de donnée et on prépare la requête
         $statement = $pdo->prepare($sql);
+        //Exécute la requête en retourant les paramètres donnés par l'utilisateur
         return $statement->execute([$this->pseudo, $this->email, $this->password, $this->creation_date, $this->id_role]);
     }
 
+    //Méthode pour récupérer un user par son email
     public function getUserByEmail()
     {
+        //Je fais une requête sql pour récupérer le user par son email
         $pdo = Database::getConnection();
         $sql = "SELECT `id_user`, `pseudo`, `email`, `password`, `creation_date`, `id_role` FROM `user` WHERE `email` = ?";
+        //On appelle la connection à la base de donnée et on prépare la requête
         $statement = $pdo->prepare($sql);
+        //On execute la requête en donnant l'email comme paramètre
         $statement->execute([$this->email]);
+        //Je mets la réponse de la requête dans la variable result
         $result = $statement->fetch(PDO::FETCH_ASSOC);
+        //S'il existe un user, alors affiche-moi tous ses paramètres :
         if($result){
             return new User($result['id_user'], $result['pseudo'], $result['email'], $result['password'], $result['creation_date'], $result['id_role']);
         }else{
+            //Sinon retourne faux
             return false;
         }
     }
 
     //les get
 
+    //Un getter est une méthode utilisée pour récupérer la valeur d’une propriété privée d’un objet
     public function getIdUser(): int|string|null
     {
         return $this->id_user;
@@ -76,6 +90,8 @@ class User
     }
 
     //Les set
+
+    //Un setter est une méthode utilisée pour modifier la valeur d’une propriété privée d’un objet
     public function setIdUser (int $id_user): void
     {
         $this->id_user = $id_user;

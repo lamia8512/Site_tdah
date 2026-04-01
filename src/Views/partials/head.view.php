@@ -14,11 +14,13 @@
 <nav class="navbar bg-primary" data-bs-theme="dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="/">TDAH</a>
-    <?php 
+    <?php
+    //s'il existe une session user ce qui signifie que la personne est connectée
     if(isset( $_SESSION["user"])){
       ?>
       <a class="navbar-brand" href="/deconnexion">Déconnexion</a>
     <?php
+    //si la session n'existe pas alors la personne doit s'inscrire puis se connecter
     }else{
       ?>
       <a class="navbar-brand" href="/inscription">Inscription</a>
