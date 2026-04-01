@@ -24,6 +24,8 @@ abstract class AbstractController
         //Vos regex = vos filtres
         $regexPseudo = "/^([0-9a-z_\-.A-Zà-üÀ-Ü\ ]){3,255}$/";
         $regexPassword = "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/";
+        $regexText = '/^[a-zA-Zà-üÀ-Ü ,!?;.:()<>$@£\'\"\-_°€&%#<>\-+\/0-9œ]{5,1000}$/';
+        
 
         //on prend le nom de l'input
         switch($nameInput){
@@ -42,13 +44,16 @@ abstract class AbstractController
                 if(!filter_var($valueInput, FILTER_VALIDATE_EMAIL)){
                     $this->errors[$nameInput] = "Merci de renseigner un e-mail correct !";
                 }
-                break;
-
-                
+                break;    
             case 'password':
 
                 if(!preg_match($regexPassword, $valueInput)){
                     $this->errors[$nameInput] = "Merci de donner un mot de passe avec au minimum : 8 caractères, 1 majuscule, 1 miniscule, 1 caractère spécial !";
+                }
+                break;
+            case 'article':
+                if(!preg_match($regexText, $valueInput)){
+                    $this->arrayError['article'] = 'Merci de renseigner un texte correcte!';
                 }
                 break;
         }
@@ -64,7 +69,7 @@ abstract class AbstractController
         //retourne mon tableau d'erreur:
         return $this->errors;
     }
-
+    //Méthode qui permet d'afficher un message d'erreur
      public function errorMessage($myMessage){
         ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -73,13 +78,13 @@ abstract class AbstractController
             </div>
         <?php
     }
-
+    //méthode appelée lors de l'affichage des informations sur un objet par les fonctions var_dump et print_r
     public function debug ($info){
         echo '<pre>';
         var_dump($info);
         echo '</pre>';
     }
-
+    //méthode qui renvoie vers un chemin de redirection et en paramètre un code d'erreur ou un code de réussite (comme quoi la redirection a bien fonctionné)
     public function redirectToRoute($route, $code){
         http_response_code($code);
         header("Location: {$route}");
