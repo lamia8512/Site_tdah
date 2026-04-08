@@ -14,6 +14,7 @@ $router->addRoute('/inscription', 'RegisterController', 'register');
 $router->addRoute('/connexion', 'SessionController', 'login');
 $router->addRoute('/deconnexion', 'SessionController', 'logout');
 $router->addRoute('/ajoutArticle', 'ArticleController', 'addArticle');
+$router->addRoute('/article', 'ArticleController', 'getAllArticles');
 
 //permet d'exécuter la requête en définissant les routes indiquées
 $router->handleRequest();

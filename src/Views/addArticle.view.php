@@ -7,6 +7,20 @@ require_once(__DIR__ . "/partials/head.view.php");
     <div class="container">
         <div class="form-group">
             <!--l'élément label permet de donner un intitulé à un champ de formulaire-->
+            <label for="title" class="form-label">Titre :</label>
+            <!--l’élément HTML input est un élément qui va permettre à l’utilisateur d’envoyer des données. Il se présente sous la forme d’une balise orpheline et va obligatoirement posséder un attribut type auquel on va pouvoir donner de nombreuses valeurs-->
+            <input type="text" name="title" id="title" class="form-control">
+            <?php 
+            //s'il existe une erreur sur le titre alors on affiche le message qui se trouve dans la clé erreur "title"
+            if(isset($this->errors['title'])){
+                ?>
+                    <p class="text-danger"><?= $this->errors['title']?></p>
+                <?php
+            }
+            ?>
+        </div>
+        <div class="form-group">
+            <!--l'élément label permet de donner un intitulé à un champ de formulaire-->
             <label for="article" class="form-label">Post un article !</label>
             <!--l’élément HTML input est un élément qui va permettre à l’utilisateur d’envoyer des données. Il se présente sous la forme d’une balise orpheline et va obligatoirement posséder un attribut type auquel on va pouvoir donner de nombreuses valeurs-->
             <textarea class="form-control" id="article" name="article" style="height: 100px"></textarea>

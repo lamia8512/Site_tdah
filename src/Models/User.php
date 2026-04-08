@@ -8,7 +8,7 @@ use Config\Database;
 
 class User
 {
-    //? = si je te donne tu seras un int sinon tu seras null
+    //? = si je te donne tu seras un int ou un string sinon tu seras null
     private ?int $id_user;
     private ?string $pseudo;
     private ?string $email;
@@ -48,7 +48,7 @@ class User
         $sql = "SELECT `id_user`, `pseudo`, `email`, `password`, `creation_date`, `id_role` FROM `user` WHERE `email` = ?";
         //On appelle la connection à la base de donnée et on prépare la requête
         $statement = $pdo->prepare($sql);
-        //On execute la requête en donnant l'email comme paramètre
+        //On exécute la requête en donnant l'email comme paramètre
         $statement->execute([$this->email]);
         //Je mets la réponse de la requête dans la variable result
         $result = $statement->fetch(PDO::FETCH_ASSOC);
@@ -57,6 +57,21 @@ class User
             return new User($result['id_user'], $result['pseudo'], $result['email'], $result['password'], $result['creation_date'], $result['id_role']);
         }else{
             //Sinon retourne faux
+            return false;
+        }
+    }
+
+    //Méthode pour récupérer un user par son id
+     public function getUserById()
+    {
+        $pdo = Database::getConnection();
+        $sql = "SELECT `id_user`, `pseudo`, `id_role` FROM `user` WHERE `id_user` = ?";
+        $statement = $pdo->prepare($sql);
+        $statement->execute([$this->id_user]);
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        if($result){
+            return new User($result['id_user'], $result['pseudo'], null, null, null, $result['id_role']);
+        }else{
             return false;
         }
     }

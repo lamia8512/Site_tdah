@@ -51,9 +51,14 @@ abstract class AbstractController
                     $this->errors[$nameInput] = "Merci de donner un mot de passe avec au minimum : 8 caractères, 1 majuscule, 1 miniscule, 1 caractère spécial !";
                 }
                 break;
+            case 'title':
+                if(!preg_match($regexText, $valueInput)){
+                    $this->arrayError[$nameInput] = 'Merci de renseigner un titre correcte!';
+                }
+                break;
             case 'article':
                 if(!preg_match($regexText, $valueInput)){
-                    $this->arrayError['article'] = 'Merci de renseigner un texte correcte!';
+                    $this->arrayError[$nameInput] = 'Merci de renseigner un texte correcte!';
                 }
                 break;
         }

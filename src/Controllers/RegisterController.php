@@ -12,7 +12,7 @@ class RegisterController extends AbstractController
     {
         //s'il existe un post dans mon formulaire d'inscription register (lorsque l'utilisateur a envoyé le post)
         if(isset($_POST['register'])){
-            //la fonction htmlspecialchars() convertit certains caractères prédéfinis en entités HTML (en chaînes de caractères) pour prévenir les attaques XSS
+            //la fonction htmlspecialchars() convertit certains caractères prédéfinis en entités HTML (en chaînes de caractères) pour prévenir les attaques XSS alors récupère le pseudo, l'email et le password donnés par l'utilisateur
             $pseudo = htmlspecialchars($_POST['pseudo']);
             $email = htmlspecialchars($_POST['email']);
             $password = htmlspecialchars($_POST['password']);
