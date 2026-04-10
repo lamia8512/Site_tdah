@@ -89,6 +89,19 @@ class Article
 
     }
 
+    // Méthode pour modifier un article par son id
+     public function editArticle()
+    {
+        //connexion à la base de données
+        $pdo = Database::getConnection();
+        //Requête qui permet de modifier les données stockées dans la base de données par les nouvelles données envoyées par l'utilisateur qui a crée l'article
+        $sql = "UPDATE `article` SET `title` = ?, `text` = ? WHERE `id_article` = ?";
+        //On prépare la requête SQL
+        $stmt = $pdo->prepare($sql);
+        //Exécute la requête en retourant les paramètres donnés par l'utilisateur
+        return $stmt->execute([$this->title, $this->text, $this->id_article]);
+    }
+
     //les get
 
     //Un getter est une méthode utilisée pour récupérer la valeur d’une propriété privée d’un objet

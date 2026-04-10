@@ -16,6 +16,7 @@ $router->addRoute('/deconnexion', 'SessionController', 'logout');
 $router->addRoute('/ajoutArticle', 'ArticleController', 'addArticle');
 $router->addRoute('/articles', 'ArticleController', 'getAllArticles');
 $router->addRoute('/affichArticle', 'ArticleController', 'getArticleById');
+$router->addRoute('/modifArticle', 'ArticleController', 'editArticle');
 
 //permet d'exécuter la requête en définissant les routes indiquées
 $router->handleRequest();
