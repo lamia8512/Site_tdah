@@ -21,6 +21,16 @@ require_once(__DIR__ . "/partials/head.view.php");
             <p><?= $myArticle->getText(); ?></p>
         </div>
     </div>
+
+    <?php
+            //Vérifie deux conditions: la 1re est que l'utilisateur est bien connecté donc que la session user existe, et la 2e que l'utilisateur connecté est l'auteur de l'article
+            if(isset($_SESSION['user']) && $_SESSION['user']['id_user'] === $myArticle->getIdUser()){
+    ?>
+            <!-- Lien permettant d'accéder à la page de modification de l'article (<a href="..."> balise HTML de lien permet de naviguer vers une autre page, ici vers la page de modification avec un paramètre get id, avec la méthode getIdUser on récupére l'id de l'utilisateur (auteur) qui a crée l'article, on crée un bouton de couleur jaune pour pouvoir modifier notre article -->
+            <a href="/modifArticle?id=<?= $myArticle->getIdUser();?>" class="btn btn-warning">Modifier</a>
+    <?php }?>
 </div>
 <?php
 require_once(__DIR__ . "/partials/footer.view.php");
+
+// Le symbole && en PHP signifie : ET logique (AND), && = “ET”, il permet de vérifier que plusieurs conditions sont vraies en même temps.
