@@ -17,6 +17,7 @@ $router->addRoute('/ajoutArticle', 'ArticleController', 'addArticle');
 $router->addRoute('/articles', 'ArticleController', 'getAllArticles');
 $router->addRoute('/affichArticle', 'ArticleController', 'getArticleById');
 $router->addRoute('/modifArticle', 'ArticleController', 'editArticle');
+$router->addRoute('/supprimArticle', 'ArticleController', 'deleteArticle');
 
 //permet d'exécuter la requête en définissant les routes indiquées
 $router->handleRequest();

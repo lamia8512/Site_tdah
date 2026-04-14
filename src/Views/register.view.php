@@ -2,16 +2,16 @@
 require_once(__DIR__ . "/partials/head.view.php");
 ?>
 <h1>Inscription</h1>
-<!--la méthode POST envoie les données (champs de formulaire) du client au serveur-->
+<!-- La méthode POST envoie les données (champs de formulaire) du client au serveur -->
 <form method="POST">
     <div class="container">
         <div class="form-group">
-            <!--l'élément label permet de donner un intitulé à un champ de formulaire-->
+            <!-- L'élément label permet de donner un intitulé à un champ de formulaire -->
             <label for="pseudo" class="form-label">Pseudo :</label>
-            <!--l’élément HTML input est un élément qui va permettre à l’utilisateur d’envoyer des données. Il se présente sous la forme d’une balise orpheline et va obligatoirement posséder un attribut type auquel on va pouvoir donner de nombreuses valeurs-->
+            <!-- L’élément HTML input est un élément qui va permettre à l’utilisateur d’envoyer des données. Il se présente sous la forme d’une balise orpheline et va obligatoirement posséder un attribut type auquel on va pouvoir donner de nombreuses valeurs -->
             <input type="text" name="pseudo" id="pseudo" placeholder="Lulu" class="form-control">
             <?php 
-            //s'il existe une erreur sur le pseudo alors on affiche le message qui se trouve dans la clé erreur "pseudo"
+            // S'il existe une erreur sur le pseudo alors on affiche le message qui se trouve dans la clé erreur "pseudo"
             if(isset($this->errors['pseudo'])){
                 ?>
                     <p class="text-danger"><?= $this->errors['pseudo']?></p>
@@ -23,7 +23,7 @@ require_once(__DIR__ . "/partials/head.view.php");
             <label for="email" class="form-label">Email :</label>
             <input type="email" name="email" id="email" placeholder="Lulu@gmail.com" class="form-control">
             <?php 
-            //s'il existe une erreur sur le mail alors on affiche le message qui se trouve dans la clé erreur "email"
+            // S'il existe une erreur sur le mail alors on affiche le message qui se trouve dans la clé erreur "email"
             if(isset($this->errors['email'])){
                 ?>
                     <p class="text-danger"><?= $this->errors['email']?></p>
@@ -35,7 +35,7 @@ require_once(__DIR__ . "/partials/head.view.php");
             <label for="password" class="form-label">Mot de passe :</label>
             <input type="password" name="password" id="password" class="form-control">
             <?php
-            //s'il existe une erreur sur le mot de passe alors on affiche le message qui se trouve dans la clé erreur "password"
+            // S'il existe une erreur sur le mot de passe alors on affiche le message qui se trouve dans la clé erreur "password"
             if(isset($this->errors['password'])){
                 ?>
                     <p class="text-danger"><?= $this->errors['password']?></p>
@@ -43,7 +43,7 @@ require_once(__DIR__ . "/partials/head.view.php");
             }
             ?>
         </div>
-        <!--création d'un bouton de type sumbit pour envoyer les données du formulaire au serveur (name permet de récupérer la méthode register dans RegisterConntroller-->
+        <!-- Création d'un bouton de type sumbit pour envoyer les données du formulaire au serveur (name permet de récupérer la méthode register dans RegisterConntroller -->
         <button type="submit" name="register" class="btn btn-primary mt-5">Inscription</button>
     </div>
 </form>
