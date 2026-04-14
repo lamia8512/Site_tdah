@@ -27,51 +27,56 @@ class User
         $this->id_role = $id_role;
     }
     
-    //Méthode pour récupérer des données de l'utilisateur pour la création du formulaire d'inscription
+    // Méthode pour récupérer des données de l'utilisateur pour la création du formulaire d'inscription
     public function register()
     {
-        //connexion à la base de données
+        // Connexion à la base de données
         $pdo = Database::getConnection();
-        //Requête qui permet d'intégrer de nouveaux enregistrements au sein de la base de données
+        // Requête qui permet d'intégrer de nouveaux enregistrements au sein de la base de données
         $sql = "INSERT INTO `user` (`pseudo`, `email`, `password`, `creation_date`, `id_role`) VALUES (?,?,?,?,?)";
-        //On appelle la connection à la base de donnée et on prépare la requête
+        // On appelle la connection à la base de donnée et on prépare la requête
         $statement = $pdo->prepare($sql);
-        //Exécute la requête en retourant les paramètres donnés par l'utilisateur
+        // Exécute la requête en retourant les paramètres donnés par l'utilisateur
         return $statement->execute([$this->pseudo, $this->email, $this->password, $this->creation_date, $this->id_role]);
     }
 
-    //Méthode pour récupérer un user par son email
+    // Méthode pour récupérer un user par son email
     public function getUserByEmail()
     {
-        //Je fais une requête sql pour récupérer le user par son email
+        // Je fais une requête sql pour récupérer le user par son email
         $pdo = Database::getConnection();
         $sql = "SELECT `id_user`, `pseudo`, `email`, `password`, `creation_date`, `id_role` FROM `user` WHERE `email` = ?";
-        //On appelle la connection à la base de donnée et on prépare la requête
+        // On appelle la connection à la base de donnée et on prépare la requête
         $statement = $pdo->prepare($sql);
-        //On exécute la requête en donnant l'email comme paramètre
+        // On exécute la requête en donnant l'email comme paramètre
         $statement->execute([$this->email]);
-        //Je mets la réponse de la requête dans la variable result
+        // Je mets la réponse de la requête dans la variable result
         $result = $statement->fetch(PDO::FETCH_ASSOC);
-        //S'il existe un user, alors affiche-moi tous ses paramètres :
+        // S'il existe un user, alors affiche-moi tous ses paramètres :
         if($result){
             return new User($result['id_user'], $result['pseudo'], $result['email'], $result['password'], $result['creation_date'], $result['id_role']);
         }else{
-            //Sinon retourne faux
+            // Sinon retourne faux
             return false;
         }
     }
 
-    //Méthode pour récupérer un user par son id
+    // Méthode pour récupérer un user par son id
      public function getUserById()
     {
+        // Je fais une requête sql pour récupérer le user par son id
         $pdo = Database::getConnection();
         $sql = "SELECT `id_user`, `pseudo`, `id_role` FROM `user` WHERE `id_user` = ?";
+        // On appelle la connection à la base de donnée et on prépare la requête
         $statement = $pdo->prepare($sql);
+        // On exécute la requête en donnant l'id comme paramètre
         $statement->execute([$this->id_user]);
+        // S'il existe un user, alors affiche-moi tous ses paramètres :
         $result = $statement->fetch(PDO::FETCH_ASSOC);
         if($result){
             return new User($result['id_user'], $result['pseudo'], null, null, null, $result['id_role']);
         }else{
+            // Sinon retourne faux
             return false;
         }
     }

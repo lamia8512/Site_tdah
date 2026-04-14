@@ -7,13 +7,13 @@ use Config\Database;
 
 class Article
 {
-    //? = si je te donne tu seras un int sinon tu seras null (propriétés)
+    // ? = si je te donne tu seras un int sinon tu seras null (propriétés)
     private ?int $id_article; //? soit string ou vide
     private ?string $title;
     private ?string $text;
     private ?int $id_user;
 
-    //Méthode magique qui va être appelée (exécutée) automatiquement à chaque fois qu’on va instancier une classe (création d'un objet à partir d'un modèle)
+    // Méthode magique qui va être appelée (exécutée) automatiquement à chaque fois qu’on va instancier une classe (création d'un objet à partir d'un modèle)
     public function __construct(?int $id_article, ?string $title, ?string $text, ?int $id_user)
     {
         $this->id_article = $id_article;
@@ -22,7 +22,7 @@ class Article
         $this->id_user= $id_user;
     }
     
-    //Méthode pour créer un article
+    // Méthode pour créer un article
     public function addArticle()
     {
         //connexion à la base de données
@@ -35,48 +35,48 @@ class Article
         return $statement->execute([$this->title, $this->text, $this->id_user]);
     }
 
-    //Méthode pour récupérer tous les articles
+    // Méthode pour récupérer tous les articles
      public function getAllArticles()
     {
-        //connexion à la base de données
+        // Connexion à la base de données
         $pdo = Database::getConnection();
-        //On sélectionne les colonnes (propriétés) de la table article + le pseudo de l'utilisateur (auteur), INNER JOIN permet de relier chaque article à son auteur via la clé étrangère article.id_user = user.id_user
+        // On sélectionne les colonnes (propriétés) de la table article + le pseudo de l'utilisateur (auteur), INNER JOIN permet de relier chaque article à son auteur via la clé étrangère article.id_user = user.id_user
         $sql = "SELECT `article`.`id_article`, `article`.`title`, `article`.`text`, `article`.`id_user`, `user`.`pseudo` 
         FROM `article`
         INNER JOIN `user` ON `article`.`id_user` = `user`.`id_user`";
-        //On prépare la requête SQL
+        // On prépare la requête SQL
         $stmt = $pdo->prepare($sql);
-        //On exécute la requête sur la base de données
+        // On exécute la requête sur la base de données
         $stmt->execute();
-        //On récupère tous les résultats sous forme de tableau associatif
+        // On récupère tous les résultats sous forme de tableau associatif
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC); // pour récupérer tous les articles
 
 
-        //On créer un tableau vide
+        // On créer un tableau vide
         $articles = [];
-        //Je boucle sur mon tableau de résultat pour créer un nouvel objet de chaque résultat
+        // Je boucle sur mon tableau de résultat pour créer un nouvel objet de chaque résultat
         foreach($result as $row){
-            //Je créer un nouvel objet
+            // Je créer un nouvel objet
             $article = new Article($row['id_article'], $row['title'], $row['text'], $row['id_user']);
-            //Je l'insert dans mon tableau
+            // Je l'insert dans mon tableau
             $articles[] = $article;
         }
         return $articles;
     }
 
-    //Méthode pour récupérer un article par son id
+    // Méthode pour récupérer un article par son id
      public function getArticleById()
     {
-        //connexion à la base de données
+        // Connexion à la base de données
         $pdo = Database::getConnection();
-        //On sélectionne les colonnes (propriétés) de la table article et on filtre les résultats pour ne retourner qu'un seul article
+        // On sélectionne les colonnes (propriétés) de la table article et on filtre les résultats pour ne retourner qu'un seul article
         $sql = "SELECT `id_article`, `title`, `text`, `id_user` 
         FROM `article` WHERE `id_article`= ?";
-        //On prépare la requête SQL
+        // On prépare la requête SQL
         $stmt = $pdo->prepare($sql);
-        //On exécute la requête, en remplaçant le marqueur `?` de la requête par la valeur de $this->id_article ()
+        // On exécute la requête, en remplaçant le marqueur `?` de la requête par la valeur de $this->id_article ()
         $stmt->execute([$this->id_article]);
-        //On récupère le résultat de chaque article sous forme de tableau associatif
+        // On récupère le résultat de chaque article sous forme de tableau associatif
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         // Vérifie si la requête a retourné un résultat
         if($result){
@@ -89,22 +89,35 @@ class Article
 
     }
 
-    // Méthode pour modifier un article par son id
+    // Méthode pour modifier un article 
      public function editArticle()
     {
-        //connexion à la base de données
+        // Connexion à la base de données
         $pdo = Database::getConnection();
-        //Requête qui permet de modifier les données stockées dans la base de données par les nouvelles données envoyées par l'utilisateur qui a crée l'article
+        // Requête qui permet de modifier les données stockées dans la base de données par les nouvelles données envoyées par l'utilisateur qui a crée l'article
         $sql = "UPDATE `article` SET `title` = ?, `text` = ? WHERE `id_article` = ?";
-        //On prépare la requête SQL
+        // On prépare la requête SQL
         $stmt = $pdo->prepare($sql);
-        //Exécute la requête en retourant les paramètres donnés par l'utilisateur
+        // Exécute la requête en retourant les paramètres donnés par l'utilisateur
         return $stmt->execute([$this->title, $this->text, $this->id_article]);
     }
 
-    //les get
+     // Méthode pour supprimer un article
+    public function deleteArticle()
+    {
+        // Connexion à la base de données
+        $pdo = Database::getConnection();
+        // Requête qui permet de supprimer un article (stocké dans la base de données dans la table article) lorsqu'il y a un id en paramètre et filtre sur l'identifiant de l'article pour éviter de supprimer tous les articles de la table
+        $sql = "DELETE FROM `article` WHERE `id_article` = ?";
+        // On prépare la requête SQL
+        $stmt = $pdo->prepare($sql);
+        // On exécute la requête, en remplaçant le marqueur `?` de la requête par la valeur de $this->id_article ()
+        return $stmt->execute([$this->id_article]);
+    }
 
-    //Un getter est une méthode utilisée pour récupérer la valeur d’une propriété privée d’un objet
+    // Les get
+
+    // Un getter est une méthode utilisée pour récupérer la valeur d’une propriété privée d’un objet
     public function getIdArticle(): int|string|null
     {
         return $this->id_article;
@@ -122,9 +135,9 @@ class Article
         return $this->id_user;
     }
 
-    //Les set
+    // Les set
 
-    //Un setter est une méthode utilisée pour modifier la valeur d’une propriété privée d’un objet
+    // Un setter est une méthode utilisée pour modifier la valeur d’une propriété privée d’un objet
     public function setIdArticle (int $id_article): void
     {
         $this->id_article = $id_article;
@@ -142,5 +155,5 @@ class Article
         $this->id_user = $id_user;
     }
 
-    //une fonction est un script qui s'exécute au moment où on l'appelle
+    // Une fonction est un script qui s'exécute au moment où on l'appelle
 }
