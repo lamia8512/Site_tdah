@@ -20,8 +20,8 @@
                 <!-- Affiche le titre de l'article dans un paragraphe HTML (balise p), on appelle la méthode getText (dans un écho en php avec la syntaxe guillemet ouvert point d'interrogation, point d'interrogation guillemet fermé) qui retourne le texte contenu dans l'article -->
                 <p><?= $myArticle->getText(); ?></p>
             </div>
-            <!-- Lien de redirection vers la liste de tous les articles (/articles : route vers la page qui affiche tous les articles,  btn : classe Bootstrap qui transforme le lien en bouton, btn-primary : classe Bootstrap qui applique un fond bleu au bouton, mt-3 : classe Bootstrap qui ajoute une marge en haut du bouton ) -->
-            <a href="/articles" class="btn btn-primary mt-3">Voir tous les articles</a>
+                <!-- Lien de redirection vers la liste de tous les articles (/articles : route vers la page qui affiche tous les articles,  btn : classe Bootstrap qui transforme le lien en bouton, btn-primary : classe Bootstrap qui applique un fond bleu au bouton, mt-3 : classe Bootstrap qui ajoute une marge en haut du bouton ) -->
+                <a href="/articles" class="btn btn-primary mt-3">Voir tous les articles</a>
         </div>
 
         <?php
@@ -44,8 +44,69 @@
                     <button type="submit" class="btn btn-danger mt-3">Supprimer</button>
                 </form>
         <?php }?>
-        
+
+        <?php
+        // Vérifie si un utilisateur est connecté (session active donc qu'elle existe bien)
+        if(isset($_SESSION['user'])){
+        ?>
+            <!-- Formulaire d'ajout de commentaire -->
+            <form method="POST">
+                <div class="container">
+                    <div class="form-group">
+                        <!-- Label du champ commentaire -->
+                        <label for="comment" class="form-label mt-3">Laissez un commentaire</label>
+                        <!-- Zone de texte pour écrire le commentaire -->
+                        <textarea class="form-control" id="comment" name="comment" style="height: 100px"></textarea>
+                        <?php
+                        // Vérifie s'il existe une erreur liée au champ "comment"
+                        if(isset($this->arrayError['comment'])){
+                            ?>
+                            <!-- Affiche le message d'erreur en rouge -->
+                            <p class="text-danger"><?= $this->arrayError['comment']?></p>
+                            <?php
+                        }
+                        ?>
+                    </div>
+                    <!-- Bouton pour envoyer le formulaire en appelant la méthode addComment qui vient du modèle Comment.php  -->
+                    <button type="submit" name="addComment" class="btn btn-success mt-3">Commenter !</button>
+                </div>
+            </form>
+        <?php
+        }
+        // Vérifie si la variable $comments existe et contient des données
+        if(isset($comments)){
+            // Parcourt chaque commentaire contenu dans le tableau $comments
+            foreach($comments as $comment)
+            {
+                ?>
+                    <!-- Carte Bootstrap pour afficher un commentaire -->
+                    <div class="card my-2 text-bg-info">
+                    <!-- En-tête de la carte : affiche le pseudo de l'utilisateur -->
+                    <div class="card-header">
+                        <?= $comment->getPseudo(); ?>
+                    </div>
+                    <!-- Corps de la carte Bootstrap -->
+                    <div class="card-body">
+                        <figure>
+                        <!-- Bloc de citation contenant le texte du commentaire -->
+                        <blockquote class="blockquote">
+                            <p><?= $comment->getText(); ?></p>
+                        </blockquote>
+                        <!-- Pied de citation : affiche la date -->
+                        <figcaption class="blockquote-footer">
+                            <!-- Si une date de modification existe, on l'affiche sinon on affiche la date de création-->
+                            <?= $comment->getModificationDate() ? $comment->getModificationDate() : $comment->getCreationDate(); ?>
+                        </figcaption>
+                        </figure>
+                    </div>
+                    </div>
+                <?php
+            }
+        }
+    ?>
+</div>
     </div>
+    
     <?php
     require_once(__DIR__ . "/partials/footer.view.php");
 

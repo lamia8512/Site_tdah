@@ -7,8 +7,8 @@ use Config\Database;
 
 class Article
 {
-    // ? = si je te donne tu seras un int sinon tu seras null (propriétés)
-    private ?int $id_article; //? soit string ou vide
+    // ? = si je te donne tu sera soit un int sinon tu seras null (propriétés) soit string ou vide
+    private ?int $id_article; 
     private ?string $title;
     private ?string $text;
     private ?int $id_user;

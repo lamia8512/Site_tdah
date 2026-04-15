@@ -56,6 +56,11 @@ abstract class AbstractController
                     $this->errors[$nameInput] = 'Merci de renseigner un texte correcte!';
                 }
                 break;
+            case 'comment':
+                if(!preg_match($regexText, $valueInput)){
+                    $this->arrayError[$nameInput] = 'Merci de renseigner un texte correcte!';
+                }
+                break;
         }
     }
 
