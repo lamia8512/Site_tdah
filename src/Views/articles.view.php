@@ -2,9 +2,9 @@
 require_once(__DIR__ . "/partials/head.view.php");
 ?>   
 <?php 
-        //On vérifie que la variable $myArticles existe (que des articles ont bien été crées par des utilisateurs)
+        // On vérifie que la variable $myArticles existe (que des articles ont bien été crées par des utilisateurs)
         if(isset($myArticles )){
-            //On parcourt tous les articles (tableau d'objets Article)
+            // On parcourt tous les articles (tableau d'objets Article)
             foreach($myArticles as $article)
             {
                 ?>

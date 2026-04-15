@@ -8,7 +8,7 @@ use Config\Database;
 
 class User
 {
-    //? = si je te donne tu seras un int ou un string sinon tu seras null
+    // ? = si je te donne tu seras soit un int sinon tu seras null (propriétés) soit string ou vide
     private ?int $id_user;
     private ?string $pseudo;
     private ?string $email;

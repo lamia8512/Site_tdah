@@ -2,7 +2,9 @@
 
 namespace App\Controllers;
 use App\Models\User;
+
 use App\Models\Article;
+use App\Models\Comment;
 use App\Utils\AbstractController;
 
 class ArticleController extends AbstractController
@@ -21,9 +23,12 @@ class ArticleController extends AbstractController
                 $this->Check('article', $text);
 
                 //on appelle notre tableau d'erreur, si celui-ci est vide alors on ajoute le titre et l'article si une session existe et que la personne est connectée
-                if(empty($this->arrayError)){
+                if(empty($this->errors)){
+                    // Création d'un nouvel objet Article (id_article comme null car L’ID est généré automatiquement par la base de données (id_article INT AUTO_INCREMENT) donc on ne le fournit pas manuellement,  titre de l'article, contenu de l'article, auteur de l'article (utilisateur connecté))
                     $article = new Article(null, $title, $text, $_SESSION['user']['id_user']);
+                    // Appel de la méthode pour insérer l'article en base de données
                     $article->addArticle();
+                    // Redirection vers la page d'accueil après la création
                     $this->redirectToRoute('/', 200);
                 }
             }
@@ -70,16 +75,48 @@ class ArticleController extends AbstractController
             // On appelle notre méthode getArticleById (qui vient du model article.php) pour avoir un résultat
             $myArticle = $article->getArticleById(); 
 
+            // Vérifie que l'article existe bien
+            if($myArticle)
+            {
+                // Vérifie si le formulaire d'ajout de commentaire a été envoyé
+                if(isset($_POST['addComment'])){
+                    // Récupère le texte du commentaire envoyé par l'utilisateur, htmlspecialchars protège contre les attaques XSS
+                    $text = htmlspecialchars($_POST['comment']);
+                    // Vérifie la validité du commentaire (longueur, contenu, etc.)
+                    $this->Check('comment', $text);
+
+                    // Si aucune erreur de validation n'est détectée dans mon tableau d'erreur
+                    if(empty($this->errors)){
+                        // Récupère la date du jour (format YYYY-MM-DD)
+                        $today = date("Y-m-d");
+                        // Création d'un nouvel objet Comment (id_comment null, contenu du commentaire dans text, date de création, date de modification null car pas encore modifiée, $id = id de l'article,  $_SESSION[...] = utilisateur connecté, pseudo null (inutile ici car récupéré via JOIN)
+                        $comment = new Comment(null, $text, $today, null, $id, $_SESSION['user']['id_user'], null);
+                        // Sauvegarde du commentaire en base de données (appelle la méthode addComment() sur l'objet $comment, cette méthode envoie une requête SQL (INSERT) pour enregistrer le commentaire en base de données)
+                        $comment->addComment();
+                        // Redirection vers la page de l'article après ajout (la page qui affiche chaque article par son id)
+                        $this->redirectToRoute('/affichArticle?id=' . $id, 200);
+                    }
+                }
+
+                // Crée un objet Comment "vide" pour rechercher les commentaires liés à l'article
+                $searchComment = new Comment(null, null, null, null, $id, null, null);
+                // Récupère (affiche) tous les commentaires de l'article en appelant la méthode getCommentByArticle 
+                $comments = $searchComment->getCommentByArticle();
+
+
             // Récupérer l'auteur de l'article
             $author = new User($myArticle->getIdUser(), null, null, null, null, null);
             // Création d'un nouvel objet User avec uniquement l'identifiant de l'auteur de l'article, on récupère l'id_user grâce au getter getIdUser() de l'objet $myArticle, les valeurs null correspondent aux autres propriétés de l'objet User qui ne sont pas nécessaires ici
             $myAuthor = $author->getUserById();   
 
             require_once(__DIR__ . "/../Views/showArticle.view.php");
-        } else {
-        $this->redirectToRoute('/', 302);
+     }else{
+                $this->redirectToRoute('/', 302);
+            }
+        }else{
+            $this->redirectToRoute('/', 302);
         }
-    }   
+    }
 
     // Méthode pour modifier un article par son id
     public function editArticle()
@@ -160,8 +197,10 @@ class ArticleController extends AbstractController
 }
 
 
-/* Avec htmlspecialchars() le script s'affiche comme du texte pour éviter qu’un utilisateur injecte du code malveillant (une attaque XSS consiste à injecter du code JavaScript malveillant dans une page web)
-  En effet, un attaquant peut voler des cookies (sessions), usurper un compte utilisateur, modifier le contenu de la page, rediriger vers un site frauduleux */
+/* 
+    Avec htmlspecialchars() le script s'affiche comme du texte pour éviter qu’un utilisateur injecte du code malveillant (une attaque XSS consiste à injecter du code JavaScript malveillant dans une page web)
+    En effet, un attaquant peut voler des cookies (sessions), usurper un compte utilisateur, modifier le contenu de la page, rediriger vers un site frauduleux 
+*/
 // Une regex (ou expression régulière) est un outil qui permet de chercher, vérifier un format (email, mot de passe…) ou manipuler du texte selon un modèle précis
 // || opérateur logique qui signifie ou (une seule condition vraie suffit)
  
