@@ -1,12 +1,16 @@
 <?php
 
+// Déclare le namespace de ce fichier : en PHP, c’est un espace de noms qui sert à organiser le code et éviter les conflits
 namespace App\Controllers;
-use App\Models\User;
 
+// Importe la classe User depuis le namespace App\Models
+use App\Models\User;
 use App\Models\Article;
 use App\Models\Comment;
+// Importe la classe AbstractController depuis le namespace App\Utils (Un AbstractController est une classe de base (classe mère) dont héritent les contrôleurs (qui fournit des outils communs à tous les contrôleurs) pour éviter de répéter du code)
 use App\Utils\AbstractController;
 
+// Déclare la classe ArticleController qui hérite de AbstractController (extends = héritage en PH), donc la classe enfant récupère les fonctionnalités de la classe mère
 class ArticleController extends AbstractController
 {
     // Méthode pour ajouter un article
@@ -134,7 +138,7 @@ class ArticleController extends AbstractController
             if($myArticle && ($_SESSION['user']['id_user'] === $myArticle->getIdUser())){
                 // Le code ici s'exécute uniquement si le formulaire a été envoyé avec une méthode POST (et que le champ de formulaire 'editArticle' existe (ici dans un bouton))
                 if(isset($_POST['editArticle'])){
-                    // Récupère la valeur 'title' (la donnée envoyée par l'utilisateur connecté envoyée via un formulaire (méthode POST) puis convertit les caractères spéciaux en entités HTML pour éviter les injections de code (XSS) lors de l'affichage
+                    // Récupère la valeur 'title'(la donnée envoyée par l'utilisateur connecté envoyée via un formulaire (méthode POST) puis convertit les caractères spéciaux en entités HTML pour éviter les injections de code (XSS) lors de l'affichage
                     $title = htmlspecialchars($_POST['title']);
                     // Récupère la valeur 'article' (la donnée envoyée par l'utilisateur connecté envoyée via un formulaire (méthode POST) puis convertit les caractères spéciaux en entités HTML pour éviter les injections de code (XSS) lors de l'affichage
                     $text = htmlspecialchars($_POST['article']);
@@ -147,6 +151,7 @@ class ArticleController extends AbstractController
                         $updateArticle = new Article($id, $title, $text, null);
                         // Appelle la méthode editArticle() sur l'objet $updateArticle afin de modifier (UPDATE) l'article en base de données en utilisant les nouvelles données contenues dans l'objet (id, title, text, etc.)
                         $updateArticle->editArticle();
+                        // Redirige l'utilisateur vers la page d'affichage de l'article après la modification du commentaire 
                         $this->redirectToRoute('/affichArticle?id='.$id , 200);
                     }
                 }
@@ -171,7 +176,7 @@ class ArticleController extends AbstractController
     {
         // Vérifie si une donnée 'id' a été envoyée via un formulaire (méthode POST)
         if(isset($_POST['id'])){
-            // Récupère la valeur 'id' depuis l'URL ($_GET) puis convertit les caractères spéciaux en entités HTML pour éviter les injections de code HTML/JavaScript (XSS)
+            // Récupère la valeur 'id' envoyée via POST (formulaire) puis convertit les caractères spéciaux en entités HTML pour éviter les injections de code HTML/JavaScript (XSS)
             $id = htmlspecialchars($_POST['id']);
             // Création d'un nouvel objet de la classe Article, on appelle le constructeur de la classe avec 4 paramètres (on donne l'id et 3 arguments null)
             $article = new Article($id, null, null, null);
@@ -180,7 +185,7 @@ class ArticleController extends AbstractController
 
             // Vérifie si l'utilisateur a le droit de supprimer l'article (cas 1 : l'article existe ET l'utilisateur est l'auteur ou cas 2 : l'article existe ET l'utilisateur est admin (id_role = 1))
             if(($myArticle && $_SESSION['user']['id_user'] === $myArticle->getIdUser()) || ($myArticle && $_SESSION['user']['id_role'] === 1)){
-                // Supprime l'article de la base de données en appelant la méthode deletArticle
+                // Supprime l'article de la base de données en appelant la méthode deleteArticle
                 $myArticle->deleteArticle();
                 // Redirige vers la page d'accueil après suppression
                 $this->redirectToRoute('/', 302);
@@ -198,8 +203,8 @@ class ArticleController extends AbstractController
 
 
 /* 
-    Avec htmlspecialchars() le script s'affiche comme du texte pour éviter qu’un utilisateur injecte du code malveillant (une attaque XSS consiste à injecter du code JavaScript malveillant dans une page web)
-    En effet, un attaquant peut voler des cookies (sessions), usurper un compte utilisateur, modifier le contenu de la page, rediriger vers un site frauduleux 
+*   Avec htmlspecialchars() le script s'affiche comme du texte pour éviter qu’un utilisateur injecte du code malveillant (une attaque XSS consiste à injecter du code JavaScript malveillant dans une page web)
+*   En effet, un attaquant peut voler des cookies (sessions), usurper un compte utilisateur, modifier le contenu de la page, rediriger vers un site frauduleux 
 */
 // Une regex (ou expression régulière) est un outil qui permet de chercher, vérifier un format (email, mot de passe…) ou manipuler du texte selon un modèle précis
 // || opérateur logique qui signifie ou (une seule condition vraie suffit)

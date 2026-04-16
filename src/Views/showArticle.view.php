@@ -33,14 +33,14 @@
         <?php }?>
 
         <?php
-                // Vérifie si l'utilisateur est autorisé à agir sur l'article (cas 1 : l'utilisateur est connecté ET c'est l'auteur de l'article ou cas 2 : l'utilisateur est connecté ET c'est un administrateur)
+                // Vérifie si l'utilisateur est autorisé à agir sur l'article (cas 1 : l'utilisateur est connecté ET c'est l'auteur de l'article OU cas 2 : l'utilisateur est connecté ET c'est un administrateur)
             if((isset($_SESSION['user']) && $_SESSION['user']['id_user'] === $myArticle->getIdUser()) || (isset($_SESSION['user']) && $_SESSION['user']['id_role'] === 1)){
         ?>
                 <!-- Formulaire pour supprimer un article -->
                 <form action="/supprimArticle" method="POST">
-                    <!-- Champ caché contenant l'ID de l'article à supprimer (en appelant la méthode GetIdArticle) -->
+                    <!-- Champ caché contenant l'ID de l'article à supprimer (en appelant la méthode getIdArticle) -->
                     <input type="hidden" name="id" value="<?= $myArticle->getIdArticle() ?>">
-                    <!-- Bouton pour envoyer le formulaire -->
+                    <!-- Bouton rouge pour envoyer le formulaire -->
                     <button type="submit" class="btn btn-danger mt-3">Supprimer</button>
                 </form>
         <?php }?>
@@ -59,15 +59,15 @@
                         <textarea class="form-control" id="comment" name="comment" style="height: 100px"></textarea>
                         <?php
                         // Vérifie s'il existe une erreur liée au champ "comment"
-                        if(isset($this->arrayError['comment'])){
+                        if(isset($this->errors['comment'])){
                             ?>
                             <!-- Affiche le message d'erreur en rouge -->
-                            <p class="text-danger"><?= $this->arrayError['comment']?></p>
+                            <p class="text-danger"><?= $this->errors['comment']?></p>
                             <?php
                         }
                         ?>
                     </div>
-                    <!-- Bouton pour envoyer le formulaire en appelant la méthode addComment qui vient du modèle Comment.php  -->
+                    <!-- Bouton vert pour envoyer le formulaire en appelant la méthode addComment qui vient du modèle Comment.php  -->
                     <button type="submit" name="addComment" class="btn btn-success mt-3">Commenter !</button>
                 </div>
             </form>
@@ -98,6 +98,26 @@
                             <?= $comment->getModificationDate() ? $comment->getModificationDate() : $comment->getCreationDate(); ?>
                         </figcaption>
                         </figure>
+                        <!-- Vérifie qu'un utilisateur est connecté (session existante) ET que cet utilisateur est bien l'auteur du commentaire ( === $comment->getIdUser() signifie l’utilisateur connecté est exactement le même que celui du commentaire) -->
+                        <?php if(isset($_SESSION['user']) && $_SESSION['user']['id_user'] === $comment->getIdUser()){
+                            ?>
+                            <!-- Lien (bouton btn jaune qui est une classe CSS Bootstrap → transforme le lien en bouton ) pour modifier un commentaire (href="/modifCommentaire?id=..." définit Définit l’URL vers laquelle on va (c'est une route dans mon index), elle appelle mon contrôleur CommentController->editComment(), ?id= est un paramètre GET qui permet de passer une donnée dans l’URL ex : /modifCommentaire?id=5, $comment->getIdComment() appelle une méthode de ton objet $comment et retourne l’ID du commentaire ex : $comment->getIdComment() = 12 donc au clic l'utilisateur est redirigé vers /modifCommentaire?id=12 afin de le modifier) -->
+                            <a class="btn btn-warning"  href="/modifCommentaire?id=<?= $comment->getIdComment() ?>">Modifier</a>
+                            <?php
+                        } 
+                        // Vérifie que l’utilisateur est connecté ET qu'il est bien l’auteur du commentaire OU que l'utilisateur connecté est un admin (rôle admin (1))
+                        if((isset($_SESSION['user']) && $_SESSION['user']['id_user'] === $comment->getIdUser()) || isset($_SESSION['user']) && $_SESSION['user']['id_role'] === 1){
+                            ?>
+                            <!-- Formulaire pour supprimer un commentaire qui permet d'envoyer une demande de suppression d’un commentaire au serveur (action → URL appelée (CommentController), method="POST" → envoi sécurisé (données non visibles dans l’URL), ici on appelle la route /supprimCommentaire qui se trouve dans l'index) -->
+                            <form action="/supprimCommentaire" method="POST">
+                                 <!-- Champ caché contenant l'ID de l'article à supprimer (en appelant la méthode getIdComment) -->
+                                <input type="hidden" name="id" value="<?= $comment->getIdComment() ?>">
+                                <!-- Bouton rouge pour envoyer le formulaire -->
+                                <button type="submit" class="btn btn-danger mt-3">Supprimer</button>
+                            </form>
+                            <?php
+                        }
+                        ?>      
                     </div>
                     </div>
                 <?php
@@ -111,3 +131,9 @@
     require_once(__DIR__ . "/partials/footer.view.php");
 
     // Le symbole && en PHP signifie : ET logique (AND), && = “ET”, il permet de vérifier que plusieurs conditions sont vraies en même temps.
+    /* 
+    * <?= ... ?> C’est du PHP court (echo)
+    * ➡️ équivalent de :
+    * <?php echo ...; ?>
+    * En PHP, echo est une instruction qui sert à afficher du contenu
+    */

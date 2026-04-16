@@ -8,6 +8,7 @@ use App\Models\User;
 // Création d'une nouvelle classe (RegisterController) qui héritera des propriétés et des méthodes d'une classe parent (AbstractController)
 class RegisterController extends AbstractController
 {
+    // Déclare une méthode publique appelée register pour l'inscription
     public function register ()
     {
         // S'il existe un post dans mon formulaire d'inscription register (lorsque l'utilisateur a envoyé le post)

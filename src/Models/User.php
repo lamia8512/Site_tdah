@@ -81,9 +81,11 @@ class User
         }
     }
 
-    //les get
+     /* 
+    * Les get
+    * Un getter est une méthode utilisée pour récupérer la valeur d’une propriété privée d’un objet
+    */
 
-    //Un getter est une méthode utilisée pour récupérer la valeur d’une propriété privée d’un objet
     public function getIdUser(): int|string|null
     {
         return $this->id_user;
@@ -109,9 +111,11 @@ class User
         return $this->id_role;
     }
 
-    //Les set
-
-    //Un setter est une méthode utilisée pour modifier la valeur d’une propriété privée d’un objet
+     /* 
+    * Les set
+    * Un setter est une méthode utilisée pour modifier la valeur d’une propriété privée d’un objet
+    */
+     
     public function setIdUser (int $id_user): void
     {
         $this->id_user = $id_user;

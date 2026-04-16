@@ -1,11 +1,14 @@
 <?php
 
+// Déclare le namespace de ce fichier : en PHP, c’est un espace de noms qui sert à organiser le code et éviter les conflits
 namespace App\Utils;
 
+// Déclare une classe abstraite appelée AbstractController (est une classe de base qui sert à être héritée, pas utilisée directement, elle centralise du code commun aux contrôleurs)
 abstract class AbstractController
 {
     protected $errors = [];
 
+    // Déclare une méthode publique appelée isNotEmpty, elle sert à vérifier si un champ (input) n’est pas vide (si une valeur envoyée par un formulaire n’est pas vide)
     public function isNotEmpty ($nameInput)
     {
         //si le post avec la valeur est vide alors
