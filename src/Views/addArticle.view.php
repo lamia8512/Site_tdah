@@ -12,10 +12,10 @@ require_once(__DIR__ . "/partials/head.view.php");
             <textarea class="form-control" id="title" name="title" style="height: 100px"></textarea>
             <?php 
            // S'il existe une erreur dans le titre dans le tableau d'erreur
-            if(isset($this->arrayError['title'])){
+            if(isset($this->errors['title'])){
                 ?>
-                    <!-- Dans un éccho php, on affiche l'erreur qu'il y a dans le titre -->
-                    <p class="text-danger"><?= $this->arrayError['title']?></p>
+                    <!-- Dans un éccho php, on affiche l'erreur qu'il y a dans le titre en rouge -->
+                    <p class="text-danger"><?= $this->errors['title']?></p>
                 <?php
             }
             ?>
@@ -25,15 +25,15 @@ require_once(__DIR__ . "/partials/head.view.php");
             <textarea class="form-control" id="article" name="article" style="height: 100px"></textarea>
             <?php 
            // S'il existe une erreur dans l'article dans le tableau d'erreur
-            if(isset($this->arrayError['article'])){
+            if(isset($this->errors['article'])){
                 ?>
-                    <!-- Dans un éccho php, on affiche l'erreur qu'il y a dans l'article -->
-                    <p class="text-danger"><?= $this->arrayError['article']?></p>
+                    <!-- Dans un éccho php, on affiche l'erreur qu'il y a dans l'article en rouge -->
+                    <p class="text-danger"><?= $this->errors['article']?></p>
                 <?php
             }
             ?>
         </div>
-        <!-- Création d'un bouton de type sumbit pour envoyer les données du formulaire au serveur (name permet de récupérer la méthode addArticle dans ArticleController -->
+        <!-- Création d'un bouton vert de type sumbit pour envoyer les données du formulaire au serveur (name permet de récupérer la méthode addArticle dans ArticleController -->
         <button type="submit" name="addArticle" class="btn btn-success mt-5">Poster !</button>
     </div>
 </form>

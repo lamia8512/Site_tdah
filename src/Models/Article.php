@@ -7,7 +7,7 @@ use Config\Database;
 
 class Article
 {
-    // ? = si je te donne tu sera soit un int sinon tu seras null (propriétés) soit string ou vide
+    // ? = si je te donne tu seras soit un int sinon tu seras null (propriétés) soit string ou vide
     private ?int $id_article; 
     private ?string $title;
     private ?string $text;
@@ -74,7 +74,7 @@ class Article
         FROM `article` WHERE `id_article`= ?";
         // On prépare la requête SQL
         $stmt = $pdo->prepare($sql);
-        // On exécute la requête, en remplaçant le marqueur `?` de la requête par la valeur de $this->id_article ()
+        // On exécute la requête, en remplaçant le marqueur `?` de la requête par la valeur de $this->id_article()
         $stmt->execute([$this->id_article]);
         // On récupère le résultat de chaque article sous forme de tableau associatif
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -115,9 +115,12 @@ class Article
         return $stmt->execute([$this->id_article]);
     }
 
-    // Les get
+    /* 
+    * Les get
+    * Un getter est une méthode utilisée pour récupérer la valeur d’une propriété privée d’un objet
+    */
 
-    // Un getter est une méthode utilisée pour récupérer la valeur d’une propriété privée d’un objet
+    // Méthode publique qui retourne l'ID de l'article
     public function getIdArticle(): int|string|null
     {
         return $this->id_article;
@@ -135,9 +138,12 @@ class Article
         return $this->id_user;
     }
 
-    // Les set
+    /* 
+    * Les set
+    * Un setter est une méthode utilisée pour modifier la valeur d’une propriété privée d’un objet
+    */
 
-    // Un setter est une méthode utilisée pour modifier la valeur d’une propriété privée d’un objet
+    // Méthode publique qui permet de modifier l'ID de l'article
     public function setIdArticle (int $id_article): void
     {
         $this->id_article = $id_article;
@@ -154,6 +160,7 @@ class Article
     {
         $this->id_user = $id_user;
     }
-
-    // Une fonction est un script qui s'exécute au moment où on l'appelle
 }
+
+// Une fonction est un script qui s'exécute au moment où on l'appelle
+// En PHP (et en programmation orientée objet), get et set sont des méthodes utilisées pour accéder et modifier les données d’un objet

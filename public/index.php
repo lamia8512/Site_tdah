@@ -18,6 +18,8 @@ $router->addRoute('/articles', 'ArticleController', 'getAllArticles');
 $router->addRoute('/affichArticle', 'ArticleController', 'getArticleById');
 $router->addRoute('/modifArticle', 'ArticleController', 'editArticle');
 $router->addRoute('/supprimArticle', 'ArticleController', 'deleteArticle');
+$router->addRoute('/modifCommentaire', 'CommentController', 'editComment');
+$router->addRoute('/supprimCommentaire', 'CommentController', 'deleteComment');
 
 //permet d'exécuter la requête en définissant les routes indiquées
 $router->handleRequest();
