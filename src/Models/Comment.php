@@ -194,9 +194,9 @@ class Comment
     */
 
 /* 
-* Une requête SQL est une instruction envoyée à une base de données pour : lire des données, ajouter des données, modifier des données, supprimer des données donc c'est elle permet de faire un CRUD
-* 1. Lire des données (SELECT) → SELECT * FROM users; Récupère tous les utilisateurs
-* 2. Ajouter (INSERT) → INSERT INTO users (name) VALUES ('Gabriel'); Ajoute un utilisateur
+* Une requête SQL est une instruction envoyée à une base de données pour : ajouter des données, lire des données, modifier des données, supprimer des données donc c'est elle permet de faire un CRUD
+* 1. Ajouter (INSERT) → INSERT INTO users (name) VALUES ('Gabriel'); Ajoute un utilisateur
+* 2. Lire des données (SELECT) → SELECT * FROM users; Récupère tous les utilisateurs
 * 3. Modifier (UPDATE) → UPDATE users SET name = 'Joaquin' WHERE id = 1; Modifie un utilisateur
 * 4. Supprimer (DELETE) → DELETE FROM users WHERE id = 1; Supprime un utilisateur
 * CRUD signifie : C Create (Créer) en SQL INSERT, Read (Lire) en SQL SELECT, Update (Modifier) en SQL UPDATE, Delete en SQL DELETE (Supprimer) 

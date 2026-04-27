@@ -1,0 +1,203 @@
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+    * {
+    /* Inclut le padding et la bordure dans la largeur et la hauteur de l'élément.
+       Cela simplifie le calcul des tailles et évite les débordements inattendus. */
+    box-sizing: border-box;
+    /* Aligne les éléments sur la ligne de base du texte environnant, pour un rendu plus cohérent. */
+    vertical-align: baseline;
+    }
+
+    .col_1 {width: 8.333333%;}
+    .col_2 {width: 16.666666%;}
+    .col_3 {width: 25%;}
+    .col_4 {width: 33.333333%;}
+    .col_5 {width: 41.666666%;}
+    .col_6 {width: 50%;}
+    .col_7 {width: 58.333333%;}
+    .col_8 {width: 66.666666%;}
+    .col_9 {width: 75%;}
+    .col_10 {width: 83.333333%;}
+    .col_11 {width:91.666666%;}
+    .col_12 {width: 100%;}
+
+    body{
+        font-family: "Roboto", sans-serif; 
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    main{
+        flex: 1;
+    }
+
+    .row{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-top: 30px;
+        justify-content: space-evenly;
+    }
+
+    .middle{
+       text-align: center;
+       font-size: x-large;
+       font-weight: bold;
+       color: #5B8F1B;
+    }
+
+    .bold{
+       font-size: medium;
+       margin-bottom: 30px;
+    }
+ 
+    .redbloc{
+        background-color: #e45959;
+        border-radius: 0 30px 30px 30px; /* Ordre des valeurs : haut-gauche (pas d'arrondi donc 0) | haut-droite | bas-droite | bas-gauche*/
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+
+    .larger{
+        font-size: large;
+        font-weight: bold;
+        color: #5B8F1B;
+        margin-top: 20px;
+    }
+
+    .icon{
+        width: 70px; 
+        height: auto;
+        vertical-align: middle;
+        margin-right: 8px;   /* espace avec le texte */
+    }
+
+    .ergo img{
+        width : 90%;
+        margin-top: 50px;
+    }
+    
+    .ovale{
+        background-color: #c3ef8d;
+        border: dashed 10px;
+        border-radius: 0 50px 50px 50px; /* Ordre des valeurs : haut-gauche (pas d'arrondi donc 0) | haut-droite | bas-droite | bas-gauche*/
+        padding: 30px;
+        margin-top: 30px;
+        margin-bottom: 60px;
+    }
+
+    .man{
+        width: 30%; 
+        height: auto;
+        vertical-align: middle;
+        margin-right: 8px;   /* espace avec le texte */
+    }
+
+    .padding{
+       padding-left: 60px;
+       font-size: large;
+    }
+
+    @media screen and (max-width:768px){
+    .row {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-items: stretch;
+        justify-content: center;
+    }
+
+    .menu-burger {
+        display: block;
+        cursor: pointer;
+        font-size: 2rem;
+        color: white;
+    }
+
+    nav ul {
+        display: none;
+        flex-direction: column;
+    }
+
+    .menu-checkbox:checked + .menu-burger + ul {
+        display: flex;
+    }
+
+    .row .col_9 .middle {
+        text-align: left;
+        font-size: large;
+    }
+
+    .row .col_9 {
+        width: 85% !important;
+        margin: 0 auto !important;
+        padding: 0 20px !important;
+    }
+
+    .row .col_9 .padding {
+        font-size: medium !important;
+        padding-left: 0 !important;
+    }
+
+    .row-redbloc {
+        padding: 0;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .row-redbloc .col_6 {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .row-redbloc .padding {
+        font-size: medium !important;
+        padding-left: 10px !important;
+        word-break: keep-all;
+        overflow-wrap: break-word;
+        hyphens: auto;
+    }
+
+    .row .col_4 {
+        width: 90% !important;
+        margin: 0 auto 20px auto !important;
+        padding: 0 20px !important;
+    }
+
+    .row .col_4 ul li {
+        font-size: medium;
+        margin-bottom: 8px;
+    }
+
+    .ergo img {
+        width: 90% !important;
+        margin: 0 auto !important;
+        display: block !important;
+    }
+
+    .row-ovale {
+        padding: 0;
+        width: 100%;
+        margin: 0 auto 50px auto;
+    }
+
+    .row-ovale .col_6 {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    .row-ovale .padding {
+        font-size: medium !important;
+        padding-left: 10px !important;
+        word-break: keep-all;
+        overflow-wrap: break-word;
+        hyphens: auto;
+    }
+    
+    .man {
+        width: 50% !important;
+        display: block !important;
+        margin: 10px auto !important;
+    }
+}

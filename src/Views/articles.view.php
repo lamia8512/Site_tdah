@@ -8,11 +8,12 @@ require_once(__DIR__ . "/partials/head.view.php");
             foreach($myArticles as $article)
             {
                 ?>
-                    <!-- Création d'une carte Bootstrap centrée avec un fond bleu clair et une marge verticale (my-2 = marge verticale, text-bg-info = fond bleu clair) -->
-                    <div class="card text-center text-bg-info my-2">
+                <div class="container">
+                    <!-- Création d'une carte Bootstrap centrée avec un fond vert et une marge (my-4 = marge haut et bas, text-bg-vert = fond vert) -->
+                    <div class="card text-center text-bg-success my-4">
                     <!-- En-tête de la carte -->
                     <div class="card-header">
-                        <!-- ✅ On récupère le pseudo via le tableau $authors ($article->getIdUser() → récupère l’ID de l’auteur et ->getPseudo() → affiche le pseudo) -->
+                        <!-- On récupère le pseudo via le tableau $authors ($article->getIdUser() → récupère l’ID de l’auteur et ->getPseudo() → affiche le pseudo) -->
                         <p><?= $authors[$article->getIdUser()]->getPseudo(); ?></p>
                     </div>
                      <!-- Corps de la carte -->
@@ -34,7 +35,20 @@ require_once(__DIR__ . "/partials/head.view.php");
                         </blockquote>
                         </figure>         
                     </div>
+                    <!-- Formulaire HTML qui permet d'envoyer une requête en GET vers la page /affichArticle -->
+                    <form method="GET" action="/affichArticle">
+                        <!-- Champ caché (non visible pour l'utilisateur) qui contient l'ID de l'article -->
+                        <!-- name="id" correspond à la clé récupérée dans $_GET['id'] dans le controller -->
+                        <!-- value contient l'ID de l'article actuel (grâce à la méthode getIdArticle()) -->
+                        <input type="hidden" name="id" value="<?= $article->getIdArticle(); ?>">
+
+                        <!-- Bouton qui envoie le formulaire -->
+                        <!-- type="submit" déclenche l'envoi du formulaire -->
+                        <!-- class="btn btn-info my-4" applique un style Bootstrap (bouton bleu + marge haut et bas) -->
+                        <button type="submit" class="btn btn-info my-4">Voir +</button>
+                    </form>
                     </div>
+                </div> 
                 <?php
             }
         }
