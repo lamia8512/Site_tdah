@@ -52,7 +52,7 @@ class ArticleController extends AbstractController
             // On appelle notre méthode getAllArticles (qui vient du model article.php) pour avoir un résultat
             $myArticles = $article->getAllArticles(); // tableau d'objets Article
 
-        // ✅ On boucle sur chaque article pour récupérer son auteur
+        // On boucle sur chaque article pour récupérer son auteur
         $authors = [];
         foreach ($myArticles as $art){
             // $art->getIdUser() → récupère l’ID de l’auteur de l’article

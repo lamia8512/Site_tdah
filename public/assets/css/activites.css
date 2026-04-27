@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    box-sizing: border-box;
+    vertical-align: baseline;
+}
+
+.col_1 {width: 8.333333%;}
+.col_2 {width: 16.666666%;}
+.col_3 {width: 25%;}
+.col_4 {width: 33.333333%;}
+.col_5 {width: 41.666666%;}
+.col_6 {width: 50%;}
+.col_7 {width: 58.333333%;}
+.col_8 {width: 66.666666%;}
+.col_9 {width: 75%;}
+.col_10 {width: 83.333333%;}
+.col_11 {width: 91.666666%;}
+.col_12 {width: 100%;}
+
+body {
+    font-family: "Roboto", sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    justify-content: space-evenly;
+}
+
+.larger {
+    font-size: large;
+    font-weight: bold;
+    color: #5B8F1B;
+    margin-top: 20px;
+}
+
+.sports img {
+    width: 75%;
+    border: 3px solid #5B8F1B;
+    margin-top: 50px;
+    margin-left: 30px;
+}
+
+.marge {
+    margin-left: 200px;
+    margin-top: 30px;
+    margin-bottom: 60px;
+}
+
+.separateur hr {
+    border: none;
+    border-bottom: 3px dashed #cf0606;
+    margin: 50px auto;
+    width: 80%;
+}
+
+.dessin img {
+    width: 100%;
+}
+
+.zen img {
+    width: 70%;
+    border: 3px solid #5B8F1B;
+    margin-top: 70px;
+    margin-left: 30px;
+}
+
+.panneau img {
+    width: 130px;
+    display: block;
+    margin: 50px auto 0 auto;
+}
+
+@media screen and (max-width:768px){
+    .row {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-top: 20px !important;
+    }
+
+    .menu-burger {
+        display: block;
+        cursor: pointer;
+        font-size: 2rem;
+        color: white;
+    }
+
+    nav ul {
+        display: none;
+        flex-direction: column;
+    }
+
+    .menu-checkbox:checked + .menu-burger + ul {
+        display: flex;
+    }
+
+    .row .col_4 {
+        width: 90% !important;
+        margin: 0 auto 20px auto !important;
+        padding: 0 15px !important;
+    }
+
+    .marge {
+        margin-left: 0 !important;
+        margin-top: 10px !important;
+    }
+
+    .row .col_6 {
+        width: 90% !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+    }
+
+    .sports img {
+        width: 75% !important;
+        margin: 10px auto 20px auto !important;
+        display: block !important;
+    }
+
+    .dessin img {
+        width: 100% !important;
+    }
+
+    .zen img {
+        width: 75% !important;
+        margin: 10px auto 60px auto !important; /*margin-top: 10px; margin-right: auto; margin-bottom: 20px; margin-left: auto;*/
+        display: block !important;
+    }
+
+    .panneau img {
+        width: 100px !important;
+        margin: 0px auto !important;
+    }
+    
+    .separateur hr {
+        margin: 20px auto !important;
+    }
+}

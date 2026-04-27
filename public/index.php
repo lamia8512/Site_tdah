@@ -3,6 +3,7 @@ require_once(__DIR__ . '/../vendor/autoload.php');
 
 //sauvegarde des données de l'utilisateur qui permet de lancer la fonctionnalité session_Start partout dans mon projet
 session_start();
+
 use Config\Router;
 
 $router = new Router;
@@ -20,6 +21,10 @@ $router->addRoute('/modifArticle', 'ArticleController', 'editArticle');
 $router->addRoute('/supprimArticle', 'ArticleController', 'deleteArticle');
 $router->addRoute('/modifCommentaire', 'CommentController', 'editComment');
 $router->addRoute('/supprimCommentaire', 'CommentController', 'deleteComment');
+$router->addRoute('/tdah', 'TdahController', 'tdah');
+$router->addRoute('/diagnostic', 'DiagnosticController', 'diagnostic');
+$router->addRoute('/activites', 'ActivitesController', 'activites');
+$router->addRoute('/astuces', 'AstucesController', 'astuces');
 
 //permet d'exécuter la requête en définissant les routes indiquées
 $router->handleRequest();

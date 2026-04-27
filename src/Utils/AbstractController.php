@@ -61,7 +61,7 @@ abstract class AbstractController
                 break;
             case 'comment':
                 if(!preg_match($regexText, $valueInput)){
-                    $this->arrayError[$nameInput] = 'Merci de renseigner un texte correcte!';
+                    $this->errors[$nameInput] = 'Merci de renseigner un texte correcte!';
                 }
                 break;
         }
