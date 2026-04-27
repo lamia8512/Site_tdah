@@ -25,6 +25,8 @@ require_once(__DIR__ . "/partials/head.view.php");
             <!-- Affiche le titre de l'article dans un paragraphe HTML (balise p), on appelle la méthode getText (dans un écho en php avec la syntaxe guillemet ouvert point d'interrogation, point d'interrogation guillemet fermé) qui retourne le texte contenu dans l'article -->
             <p><?= $myArticle->getText(); ?></p>
         </div>
+
+        <a href="/articles" class="btn btn-primary">Voir tous les articles</a>
     </div>
 
     <?php
@@ -147,3 +149,5 @@ require_once(__DIR__ . "/partials/head.view.php");
 
 <?php
 require_once(__DIR__ . "/partials/footer.view.php");
+
+
