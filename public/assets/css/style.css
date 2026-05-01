@@ -211,6 +211,13 @@ a.my-btn3:hover {
     background: #a171a6;
 }
 
+.blockquote {
+    font-size: 1.1rem;
+}
+
+.comments-container p {
+    font-size: 1.1rem;
+}
 
 footer {
     background-color: #5B8F1B;

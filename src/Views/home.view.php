@@ -4,7 +4,7 @@ require_once(__DIR__ . "/partials/head.view.php");
 
     <main>
         <?php if(isset($_SESSION['user'])) { ?>
-            <h1>Bienvenue <?= htmlspecialchars($_SESSION['user']['pseudo']) ?></h1>
+            <h1>Bienvenue <?= $_SESSION['user']['pseudo'] ?></h1>
             <a href="/ajoutArticle" class="my-btn2">Poster un article</a>
             <a href="/articles" class="my-btn3">Voir tous les articles</a>
         <?php } ?>
