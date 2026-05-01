@@ -10,6 +10,9 @@ CREATE TABLE IF NOT EXISTS `role`(
     CONSTRAINT `role_pk` PRIMARY KEY (`id_role`)
 );
 
+INSERT INTO `role` (`name`) VALUES ('admin');
+INSERT INTO `role` (`name`) VALUES ('user');
+
 CREATE TABLE IF NOT EXISTS `user`(
     `id_user` Int Auto_increment NOT NULL,
     `pseudo` Varchar (50) NOT NULL,

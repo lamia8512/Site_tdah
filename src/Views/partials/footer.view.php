@@ -1,3 +1,3 @@
 <footer>
-    <p>©<?= date('Y') ?> - Blog TDAH - <?= htmlspecialchars("Lamia DARMON") ?></p>
+    <p>©<?= date('Y') ?> - Blog TDAH - Lamia DARMON</p>
 </footer>
